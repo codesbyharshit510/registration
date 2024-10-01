@@ -1,0 +1,11 @@
+
+body{
+    background-color: aqua;
+}
+#heading
+{
+    background-color: rgb(226, 153, 43);
+    font-size: 50%;
+    border-color: aquamarine;
+    text-align: center;
+}
