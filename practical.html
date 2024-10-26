@@ -1,0 +1,67 @@
+<!DOCTYPE html>  
+  <html>  
+  <head>  
+    <title>Employee Registration</title>  
+    <script>  
+      function validateForm() {  
+        let firstName = document.forms["registrationForm"]["firstName"].value;  
+        let lastName = document.forms["registrationForm"]["lastName"].value;  
+        let email = document.forms["registrationForm"]["email"].value;  
+        let phone = document.forms["registrationForm"]["phone"].value;  
+        let password = document.forms["registrationForm"]["password"].value;  
+        let confirmPassword = document.forms["registrationForm"]["confirmPassword"].value;  
+        if (firstName == "" || lastName == "" || email == "" || phone == "" || password == "" || confirmPassword == "") {  
+          alert("Please fill all fields");  
+          return false;  
+        }  
+        if (!validateEmail(email)) {  
+          alert("Invalid email address");  
+          return false;  
+        }  
+        if (!validatePhone(phone)) {  
+          alert("Invalid phone number");  
+          return false;  
+        }  
+        if (password != confirmPassword) {  
+          alert("Passwords do not match");  
+          return false;  
+        }  
+        if (!validatePassword(password)) {  
+          alert("Password must contain at least two digits and two special characters");  
+          return false;  
+        }  
+        return true;  
+      }  
+      function validateEmail(email) {  
+        // You can use a more robust email validation regex if needed  
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);  
+      }  
+      function validatePhone(phone) {  
+        // You can customize this based on your phone number format  
+        return /^\d{10}$/.test(phone);  
+      }  
+      function validatePassword(password) {  
+        // Check for at least two digits and two special characters  
+        return /^(?=.\d.\d)(?=.[!@#$%^&()+\-=\[\]{};':"\\|,.<>\/?]).[!@#$%^&()+\-=\[\]{};':"\\|,.<>\/?].*$/.test(password);  
+      }  
+    </script>  
+  </head>  
+  <body>  
+    <h2>Employee Registration</h2>  
+    <form name="registrationForm" onsubmit="return validateForm()">  
+      <label for="firstName">First Name:</label><br>  
+      <input type="text" id="firstName" name="firstName"><br><br>  
+      <label for="lastName">Last Name:</label><br>  
+      <input type="text" id="lastName" name="lastName"><br><br>  
+      <label for="email">Email:</label><br>  
+      <input type="email" id="email" name="email"><br><br>  
+      <label for="phone">Phone:</label><br>  
+      <input type="tel" id="phone" name="phone"><br><br>  
+      <label for="password">Password:</label><br>  
+      <input type="password" id="password" name="password"><br><br>  
+      <label for="confirmPassword">Confirm Password:</label><br>  
+      <input type="password" id="confirmPassword" name="confirmPassword"><br><br>  
+      <input type="submit" value="Submit">  
+    </form>  
+  </body>  
+  </html>

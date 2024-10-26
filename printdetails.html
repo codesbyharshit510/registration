@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Profile Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .profile-container {
+            display: flex;
+            align-items: center;
+        }
+        img {
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+        .profile-details {
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <h1>GitHub Profile Details</h1>
+    <div class="profile-container" id="profile-container">
+        <img id="avatar" src="" alt="Avatar" width="150">
+        <div class="profile-details">
+            <p><strong>Username:</strong> <span id="username"></span></p>
+            <p><strong>Name:</strong> <span id="name"></span></p>
+            <p><strong>Bio:</strong> <span id="bio"></span></p>
+            <p><strong>Location:</strong> <span id="location"></span></p>
+            <p><strong>Public Repos:</strong> <span id="repos"></span></p>
+            <p><strong>Followers:</strong> <span id="followers"></span></p>
+            <p><strong>Following:</strong> <span id="following"></span></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
