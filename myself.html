@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub User Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .user-info {
+            margin-top: 20px;
+        }
+        .user-info h2 {
+            margin-bottom: 10px;
+        }
+        .user-info p {
+            margin: 5px 0;
+        }
+        .avatar {
+            width: 150px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>GitHub User Information</h1>
+    
+    <input type="text" id="username" placeholder="Enter GitHub username" />
+    <button onclick="fetchGitHubUserData()">Get User Info</button>
+
+    <div class="user-info" id="userInfo">
+        
+    </div>
+</div>
+
+<script>
+function fetchGitHubUserData() {
+    const username = document.getElementById('username').value.trim();
+    const userInfoDiv = document.getElementById('userInfo');
+
+    if (!username) {
+        alert("Please enter a GitHub username.");
+        return;
+    }
+
+    const apiUrl = `https://api.github.com/users/${username}`;
+    
+    // Fetch data from GitHub API
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('User not found');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Clear any previous data
+            userInfoDiv.innerHTML = '';
+
+            
+            const userDetails = `
+                <div style="text-align: center;">
+                    <img src="${data.avatar_url}" alt="Avatar" class="avatar" />
+                </div>
+                <h2>${data.name || 'N/A'}</h2>
+                <p><strong>Username:</strong> ${data.login}</p>
+                <p><strong>Bio:</strong> ${data.bio || 'No bio available'}</p>
+                <p><strong>Location:</strong> ${data.location || 'Not provided'}</p>
+                <p><strong>Public Repos:</strong> ${data.public_repos}</p>
+                <p><strong>Followers:</strong> ${data.followers}</p>
+                <p><strong>Following:</strong> ${data.following}</p>
+                <p><strong>Company:</strong> ${data.company || 'Not provided'}</p>
+                <p><strong>Blog:</strong> <a href="${data.blog}" target="_blank">${data.blog || 'No blog'}</a></p>
+                <p><strong>GitHub URL:</strong> <a href="${data.html_url}" target="_blank">${data.html_url}</a></p>
+            `;
+
+            userInfoDiv.innerHTML = userDetails;
+        })
+        .catch(error => {
+            
+            userInfoDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+        });
+}
+</script>
+
+</body>
+</html>
