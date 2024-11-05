@@ -60,22 +60,27 @@ function fetchGitHubUserData() {
 
     const apiUrl = `https://api.github.com/users/${username}`;
     
-    // Fetch data from GitHub API
+    userInfoDiv.innerHTML = `<p>Loading...</p>`;  // Add a loading message
+
     fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
-                throw new Error('User not found');
+                if (response.status === 404) {
+                    throw new Error('User not found');
+                } else if (response.status === 403) {
+                    throw new Error('Rate limit exceeded. Please try again later.');
+                } else {
+                    throw new Error('Error fetching data');
+                }
             }
             return response.json();
         })
         .then(data => {
-            // Clear any previous data
-            userInfoDiv.innerHTML = '';
-
+            userInfoDiv.innerHTML = ''; // Clear loading message
             
             const userDetails = `
                 <div style="text-align: center;">
-                    <img src="${data.avatar_url}" alt="Avatar" class="avatar" />
+                    <img src="${data.avatar_url}" alt="${data.login}'s avatar" class="avatar" onerror="this.src='https://via.placeholder.com/150'" />
                 </div>
                 <h2>${data.name || 'N/A'}</h2>
                 <p><strong>Username:</strong> ${data.login}</p>
@@ -85,17 +90,22 @@ function fetchGitHubUserData() {
                 <p><strong>Followers:</strong> ${data.followers}</p>
                 <p><strong>Following:</strong> ${data.following}</p>
                 <p><strong>Company:</strong> ${data.company || 'Not provided'}</p>
-                <p><strong>Blog:</strong> <a href="${data.blog}" target="_blank">${data.blog || 'No blog'}</a></p>
+                <p><strong>Blog:</strong> ${data.blog ? `<a href="${data.blog}" target="_blank">${data.blog}</a>` : 'No blog'}</p>
                 <p><strong>GitHub URL:</strong> <a href="${data.html_url}" target="_blank">${data.html_url}</a></p>
             `;
 
             userInfoDiv.innerHTML = userDetails;
         })
         .catch(error => {
-            
             userInfoDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
         });
 }
+
+
+    
+   
+               
+     
 </script>
 
 </body>
